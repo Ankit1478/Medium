@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+<<<<<<< HEAD
     /* Visit https://aka.ms/tsconfig to read more about this file */
     /* Projects */
     // "incremental": true,                              /* Save .tsbuildinfo files to allow for incremental compilation of projects. */
@@ -98,4 +99,19 @@
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   }
+=======
+    "target": "ESNext",
+  "module": "ESNext",
+  "moduleResolution": "Bundler",
+  "strict": true,
+  "lib": [
+    "ESNext"
+  ],
+  "types": [
+    "@cloudflare/workers-types"
+  ],
+  "jsx": "react-jsx",
+  "jsxImportSource": "hono/jsx"
+},
+>>>>>>> 8bd7c092cc5a458140877a8307da6d3ce86f895c
 }

@@ -1,6 +1,6 @@
 {
   "name": "@ankit1478/common-mediumproject",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "hono": "^4.2.6",
     "zod": "^3.22.4"
   }
 }

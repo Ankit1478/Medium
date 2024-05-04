@@ -4,6 +4,7 @@ import { Hono } from 'hono'
 import { decode, sign, verify } from 'hono/jwt'
 import { UserRoute } from './routes/user'
 import { BlogRoute } from './routes/blog'
+import { cors } from 'hono/cors'
 
 const app = new Hono<{
   Bindings: {
@@ -12,7 +13,7 @@ const app = new Hono<{
   }
 }>()
 
-
+app.use('/*', cors())
 app.route("/api/v1/user", UserRoute);
 app.route("/api/v1/blog", BlogRoute);
 
