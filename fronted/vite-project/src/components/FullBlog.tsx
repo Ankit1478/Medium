@@ -1,7 +1,10 @@
 import { Blog } from "../hooks";
 import { Appbar } from "./AppBar";
+import { useParams } from 'react-router-dom';
+import { BlogComponent } from '../pages/Delete';
 
 export const Fullblog = ({ blog }: { blog: Blog }) => {
+    const { id } = useParams<{ id: string }>();
     return (
         <div><Appbar />
             <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100">
@@ -19,12 +22,14 @@ export const Fullblog = ({ blog }: { blog: Blog }) => {
                                     <Avatar name={blog.author.name.toUpperCase()} /> &nbsp; &nbsp;by {blog.author.name}
                                 </div>
 
-                                {/* <div>{blog.publishDate}</div> */}
                             </div>
-
 
                             <p className="mt-2 text-gray-500">{blog.content}</p>
                         </div>
+
+                    </div>
+                    <div className="p-5">
+                        <BlogComponent blogId={id}></BlogComponent>
                     </div>
                 </div>
             </div>

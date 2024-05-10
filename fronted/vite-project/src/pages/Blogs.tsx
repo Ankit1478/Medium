@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useBlog } from '../hooks';
 import { Fullblog } from '../components/FullBlog';
-import { BlogComponent } from './Delete';
+
 
 export const Blogs = () => {
     const { id } = useParams<{ id: string }>();
@@ -12,8 +12,7 @@ export const Blogs = () => {
 
     return (
         <div>
-            <Fullblog blog={blogs} />
-            <BlogComponent blogId={id} />
+            <Fullblog blog={blogs}></Fullblog>
         </div>
     );
 };

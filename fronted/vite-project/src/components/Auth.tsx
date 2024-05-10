@@ -25,8 +25,10 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
         try {
             const res = await axios.post(`${BACKEND_URL}/api/v1/user/${type}`, postInput);
             const jwt = res.data.jwt;
+            const id = res.data.user.id;
             if (jwt) {
                 localStorage.setItem("token", jwt);
+                localStorage.setItem("user", id);
                 navigate("/blog");
             } else {
                 console.error("No token received in response");

@@ -34,10 +34,16 @@ UserRoute.post('/signup', async (c) => {
                 password: body.password
             }
         })
+        const userResponse = {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+        };
 
         const token = await sign({ id: user.id }, c.env.JWT_SECRET);
         return c.json({
-            jwt: token
+            jwt: token,
+            user: userResponse
         })
     } catch (e) {
         console.log(e);
@@ -72,8 +78,14 @@ UserRoute.post('/signin', async (c) => {
         return c.json({ error: "user not exists" })
     }
 
+    const userResponse = {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+    };
     const token = await sign({ id: user.id }, c.env.JWT_SECRET);
     return c.json({
-        jwt: token
+        jwt: token,
+        user: userResponse
     })
 })

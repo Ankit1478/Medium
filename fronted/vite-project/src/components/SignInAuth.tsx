@@ -16,10 +16,12 @@ export const SigninAuth = ({ type }: { type: "signup" | "signin" }) => {
             const res = await axios.post(`${BACKEND_URL}/api/v1/user/signin`, postInput);
             console.log("Response:", res.data); // Log the response data for inspection
 
-            const jwt = res.data.jwt; // Extract JWT token from response data
+            const jwt = res.data.jwt;
+            const id = res.data.user.id;
 
             if (jwt) {
                 localStorage.setItem("token", jwt);
+                localStorage.setItem("user", id);
                 navigate("/blog");
             } else {
                 console.error("No token received in response");
