@@ -1,16 +1,19 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { BACKEND_URL } from "../config";
+import { useNavigate } from "react-router-dom";
 
-interface Author {
+
+export interface Author {
     name: string;
 }
-
-interface Blog {
+const publishedDateString = new Date(Date.now()).toLocaleDateString("en-US");
+export interface Blog {
     id: number;
     title: string;
     content: string;
     author: Author;
+
 }
 
 interface BlogsResponse {
@@ -47,6 +50,7 @@ export const useBlogs = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [blogs, setBlogs] = useState<Blog[]>([]); // Use the Blog interface
 
+
     useEffect(() => {
         axios.get<BlogsResponse>(`${BACKEND_URL}/api/v1/blog/getall`, {
             headers: {
@@ -67,4 +71,22 @@ export const useBlogs = () => {
         loading,
         blogs
     };
+}
+
+
+export async function deleteBlog(blogId: string) {
+    const navigate = useNavigate();
+    const token = localStorage.getItem("token");
+    if (!token) {
+        navigate("/signin");
+    }
+    const response = await axios.delete(
+        `${BACKEND_URL}/api/v1/blog/delete/${blogId}`,
+        {
+            headers: {
+                Authorization: token,
+            },
+        }
+    );
+    return response.data.message;
 }

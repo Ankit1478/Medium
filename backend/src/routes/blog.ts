@@ -1,13 +1,14 @@
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { Hono } from 'hono'
-import { decode, sign, verify } from 'hono/jwt'
+import { decode, jwt, sign, verify } from 'hono/jwt'
 import { createPostInput, updatePostInput } from "@ankit1478/common-mediumproject"
 
 export const BlogRoute = new Hono<{
     Bindings: {
         DATABASE_URL: string
         JWT_SECRET: string
+        params: string
     },
     Variables: {
         userId: string
@@ -35,6 +36,38 @@ BlogRoute.get('/getall', async (c) => {
     return c.json({ users });
 })
 
+BlogRoute.get('/:id', async (c) => {
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate())
+
+
+    const postId = c.req.param('id');
+    try {
+        const users = await prisma.post.findFirst({
+            where: {
+                id: postId
+            },
+            select: {
+                id: true,
+                title: true,
+                content: true,
+                author: {
+                    select: {
+                        name: true
+                    }
+                }
+            }
+        })
+        return c.json({ users });
+    }
+    catch (e) {
+        console.log(e);
+        c.status(411);
+        return c.text('Invalid')
+    }
+
+})
 
 BlogRoute.use('/*', async (c, next) => {
     const header = c.req.header("authorization");
@@ -119,37 +152,55 @@ BlogRoute.put('/update', async (c) => {
 })
 
 
-
-BlogRoute.get('/:id', async (c) => {
+BlogRoute.delete("/delete/:id", async (c) => {
     const prisma = new PrismaClient({
         datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate())
 
 
-    const postId = c.req.param('id');
+    const token = c.req.header("authorization")
+    if (!token) {
+        return c.json({ msg: "Authentication token is missing" });
+
+    }
+
+    let userId;
     try {
-        const users = await prisma.post.findFirst({
+        const decoded = await verify(token, c.env.JWT_SECRET);
+        userId = decoded.id;
+    } catch (e) {
+        return c.json({ msg: "Invalid or expired token" });
+
+    }
+
+    const postId = await c.req.param("id");
+    try {
+        // Retrieve the post to check if the user is authorized to delete it
+        const post = await prisma.post.findUnique({
             where: {
                 id: postId
-            },
-            select: {
-                id: true,
-                title: true,
-                content: true,
-                author: {
-                    select: {
-                        name: true
-                    }
-                }
             }
-        })
-        return c.json({ users });
-    }
-    catch (e) {
+        });
+
+        if (!post) {
+            return c.json({ msg: "Post not found" });
+
+        }
+
+        if (post.authorId !== userId) {
+            return c.json({ msg: "User not authorized to delete this post" });
+
+        }
+
+        await prisma.post.delete({
+            where: {
+                id: postId
+            }
+        });
+
+        return c.json({ msg: "succesfully Delete" });
+    } catch (e) {
         console.log(e);
-        c.status(411);
-        return c.text('Invalid')
+        return c.json({ msg: "Failed to delete post" });
     }
-
-})
-
+});

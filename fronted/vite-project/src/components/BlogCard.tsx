@@ -20,7 +20,7 @@ export const BlogCard = ({
     let minutesString: string = minutes.toString();
     return (
         <Link to={`/blog/${id}`}>
-            <div className=' max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-4xl '>
+            <div className='max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-4xl p-4 '>
                 <div className='md:flex'>
                     <div className='p-11'>
                         <div className='uppercase tracking-wide text-sm text-indigo-500 font-semibold'>{name}</div>
@@ -36,11 +36,15 @@ export const BlogCard = ({
                             <div className='flex space-x-1 text-sm text-gray-500 invisible lg:visible'>
                                 <time dateTime={publishedDate}>{publishedDate}</time>
                             </div>
-                            <div className='text-xs mt-5 font-thin invisible lg:visible'>{minutesString} minute read</div>
+                            <div className='text-xs mt-5 font-thin invisible lg:visible'>{minutesString} min read</div>
                         </div>
                     </div>
+
                 </div>
-            </div></Link>
+
+
+            </div>
+        </Link>
     );
 };
 
