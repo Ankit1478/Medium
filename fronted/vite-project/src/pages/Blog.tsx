@@ -1,5 +1,6 @@
 import { Appbar } from "../components/AppBar";
 import { BlogCard } from "../components/BlogCard";
+import { Spinner } from "../components/Spiner";
 import { useBlog, useBlogs } from "../hooks";
 
 
@@ -8,7 +9,11 @@ export const Blog = () => {
     const { loading, blogs } = useBlogs();
     const publishedDateString = new Date(Date.now()).toLocaleDateString("en-US");
 
-    if (loading) return <div>Loading.......</div>;
+    if (loading) return <div>
+        <div className="w-screen h-screen flex justify-center items-center">
+            <Spinner />
+        </div>
+    </div>;
 
     return (
         <div  >

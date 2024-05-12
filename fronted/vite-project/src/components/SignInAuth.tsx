@@ -19,6 +19,7 @@ export const SigninAuth = ({ type }: { type: "signup" | "signin" }) => {
             const jwt = res.data.jwt;
             const id = res.data.user.id;
 
+
             if (jwt) {
                 localStorage.setItem("token", jwt);
                 localStorage.setItem("user", id);

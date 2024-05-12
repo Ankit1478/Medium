@@ -20,7 +20,7 @@ export const BlogCard = ({
     let minutesString: string = minutes.toString();
     return (
         <Link to={`/blog/${id}`}>
-            <div className='max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-4xl p-4 '>
+            <div className='max-w-md mx-auto bg-slate-70 rounded-xl shadow-md overflow-hidden md:max-w-4xl p-4 '>
                 <div className='md:flex'>
                     <div className='p-11'>
                         <div className='uppercase tracking-wide text-sm text-indigo-500 font-semibold'>{name}</div>

@@ -109,7 +109,8 @@ BlogRoute.post('/', async (c) => {
     });
 
     return c.json({
-        id: post.id
+        id: post.id,
+        user_id: authorId
     })
 })
 
@@ -191,6 +192,8 @@ BlogRoute.delete("/delete/:id", async (c) => {
             return c.json({ msg: "User not authorized to delete this post" });
 
         }
+        console.log(post.authorId);
+        console.log(userId);
 
         await prisma.post.delete({
             where: {
@@ -198,7 +201,7 @@ BlogRoute.delete("/delete/:id", async (c) => {
             }
         });
 
-        return c.json({ msg: "succesfully Delete" });
+        return c.json({ id: postId });
     } catch (e) {
         console.log(e);
         return c.json({ msg: "Failed to delete post" });

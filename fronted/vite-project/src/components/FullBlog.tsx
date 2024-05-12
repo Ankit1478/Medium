@@ -5,6 +5,8 @@ import { BlogComponent } from '../pages/Delete';
 
 export const Fullblog = ({ blog }: { blog: Blog }) => {
     const { id } = useParams<{ id: string }>();
+    const user = localStorage.getItem("user")
+
     return (
         <div><Appbar />
             <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100">
@@ -29,7 +31,7 @@ export const Fullblog = ({ blog }: { blog: Blog }) => {
 
                     </div>
                     <div className="p-5">
-                        <BlogComponent blogId={id}></BlogComponent>
+                        <BlogComponent blogId={id} authorId={user}></BlogComponent>
                     </div>
                 </div>
             </div>

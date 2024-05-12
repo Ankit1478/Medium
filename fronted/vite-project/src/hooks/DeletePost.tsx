@@ -14,9 +14,8 @@ export async function deleteBlogs(blogId: string, navigate: ReturnType<typeof us
                 Authorization: token,
             },
         });
-
-        navigate("/");
-        return response.data.message;
+        const res = response.data.id;
+        return res;
     } catch (error) {
         console.error('Error deleting the blog:', error);
         return 'Failed to delete the blog';
