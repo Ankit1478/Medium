@@ -1,7 +1,7 @@
 import { Appbar } from "../components/AppBar";
 import { BlogCard } from "../components/BlogCard";
 import { Spinner } from "../components/Spiner";
-import { useBlog, useBlogs } from "../hooks";
+import { useBlogs } from "../hooks";
 
 
 export const Blog = () => {

@@ -11,7 +11,7 @@ export const Post = () => {
     const handleSubmit = async () => {
         const res = await axios.post(`${BACKEND_URL}/api/v1/blog`, {
             title,
-            content // Changed from description to content
+            content
         }, {
             headers: {
                 Authorization: localStorage.getItem("token")
@@ -19,6 +19,7 @@ export const Post = () => {
         })
 
         localStorage.setItem("authoId", res.data.user_id)
+        localStorage.setItem("postId", res.data.id)
         navigate(`/blog/${res.data.id}`)
 
     };

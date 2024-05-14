@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 export interface Author {
     name: string;
 }
-const publishedDateString = new Date(Date.now()).toLocaleDateString("en-US");
+
 export interface Blog {
     id: number;
     title: string;

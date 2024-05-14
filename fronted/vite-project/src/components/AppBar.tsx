@@ -3,15 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 
 export const Appbar = () => {
-    const navigate = useNavigate();
     const userToken = localStorage.getItem("token");
-
-    const handleLogout = () => {
-        localStorage.removeItem("token");
-        // localStorage.removeItem("user");
-        localStorage.removeItem("authoId");
-        navigate('/');
-    };
 
     return (<div className="border-b border-slate-100 flex justify-between items-center p-4 md:px-16">
         <Link to="/" className="text-xl font-bold">
@@ -47,12 +39,12 @@ function ProfileBox() {
 
     const logout = () => {
         localStorage.removeItem("token");
+        localStorage.removeItem("authoId");
+        localStorage.removeItem("user");
         navigate("/");
     };
 
-    const goToBookmarks = () => {
-        navigate("/");
-    };
+
     return (
         <div className="relative cursor-pointer">
             <Avatar name="Ankit Raj" onClick={() => setShow(!show)} />

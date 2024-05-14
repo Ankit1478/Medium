@@ -3,30 +3,24 @@ import { useNavigate } from 'react-router-dom';
 import { deleteBlogs } from '../hooks/DeletePost';
 
 interface BlogProps {
-    blogId: string;
+    blogId: number;
     authorId: string;
 }
 
-export const BlogComponent: React.FC<BlogProps> = ({ blogId, authorId }) => {
+export const BlogComponent: React.FC<BlogProps> = ({ blogId }) => {
     const navigate = useNavigate();
     const authOID = localStorage.getItem("authoId");
+    const authorId = localStorage.getItem("user")
+    const postid = localStorage.getItem("postId");
     console.log(authOID);
-    console.log(authorId)
+
 
     const handleDelete = async () => {
-
-        try {
-            const res = await deleteBlogs(blogId, navigate);
-            if (res) {
-                alert("Successfully blog deleted");
-                navigate('/');
-            }
-            else {
-                alert("UnAuthorized Request");
-            }
-        } catch (error) {
-            alert("Failed to delete the blog");
-        }
+        if (await deleteBlogs(blogId, navigate)) {
+            alert("Successfully deleted blog");
+            navigate('/');
+        };
+        alert("Not Authorize")
     };
 
     return (
@@ -44,4 +38,3 @@ export const BlogComponent: React.FC<BlogProps> = ({ blogId, authorId }) => {
     );
 };
 
-export default BlogComponent;

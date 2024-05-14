@@ -200,7 +200,7 @@ BlogRoute.delete("/delete/:id", async (c) => {
                 id: postId
             }
         });
-
+        console.log(postId)
         return c.json({ id: postId });
     } catch (e) {
         console.log(e);
