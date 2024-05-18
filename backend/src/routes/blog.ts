@@ -200,8 +200,8 @@ BlogRoute.delete("/delete/:id", async (c) => {
                 id: postId
             }
         });
-        console.log(postId)
-        return c.json({ id: postId });
+
+        return c.json({ message: "Successfully deleted blog" });
     } catch (e) {
         console.log(e);
         return c.json({ msg: "Failed to delete post" });

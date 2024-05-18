@@ -4,55 +4,49 @@ import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
 
 
-export interface Author {
-    name: string;
-}
 
 export interface Blog {
-    id: number;
-    title: string;
-    content: string;
-    author: Author;
-
+    "content": string,
+    "title": string
+    "id": string,
+    "author": {
+        "name": string
+    }
 }
-
-interface BlogsResponse {
-    users: Blog[];
-}
+export type BlogArray = Blog[];
 
 export const useBlog = ({ id }: { id: string }) => {
     const [loading, setLoading] = useState<boolean>(true);
-    const [blogs, setBlogs] = useState<Blog[]>([]); // Use the Blog interface
+    const [blogs, setBlogs] = useState<Blog[]>([]);
 
     useEffect(() => {
-        axios.get<BlogsResponse>(`${BACKEND_URL}/api/v1/blog/${id}`, {
+        axios.get(`${BACKEND_URL}/api/v1/blog/${id}`, {
             headers: {
-                Authorization: localStorage.getItem("token")
-            }
+                Authorization: localStorage.getItem("token") || '',
+            },
         })
             .then(response => {
-                setBlogs(response.data.users); // Ensure correct data structure
+                setBlogs(response.data.users); // Assuming the response data contains an array of blogs
                 setLoading(false);
             })
             .catch(error => {
                 console.error("Failed to fetch blogs:", error);
                 setLoading(false);
             });
-    }, []);
+    }, [id]); // Make sure to include 'id' as a dependency
 
     return {
         loading,
-        blogs
+        blogs,
     };
-}
-
+};
 export const useBlogs = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [blogs, setBlogs] = useState<Blog[]>([]); // Use the Blog interface
 
 
     useEffect(() => {
-        axios.get<BlogsResponse>(`${BACKEND_URL}/api/v1/blog/getall`, {
+        axios.get(`${BACKEND_URL}/api/v1/blog/getall`, {
             headers: {
                 Authorization: localStorage.getItem("token")
             }

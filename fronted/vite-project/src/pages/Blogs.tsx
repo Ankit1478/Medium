@@ -1,20 +1,27 @@
-import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useBlog } from '../hooks';
+import { useBlog } from '../hooks'; // Import the Blog type
 import { Fullblog } from '../components/FullBlog';
-
+import { Spinner } from '../components/Spiner';
 
 export const Blogs = () => {
-    const { id } = useParams<{ id: string }>();
+    const { id } = useParams();
     const { loading, blogs } = useBlog({ id: id || "" });
 
-    if (loading) return <div></div>;
+    if (loading || !blogs) {
+        return (
+            <div className="w-screen h-screen flex justify-center items-center">
+                <Spinner />
+            </div>
+        );
+    }
 
     return (
         <div>
-            <Fullblog blog={blogs}></Fullblog>
+
+            <div>
+                <Fullblog blog={blogs}></Fullblog>
+            </div>
         </div>
     );
 };
 
-export default Blogs;
