@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { Hono } from 'hono'
-import { decode, jwt, sign, verify } from 'hono/jwt'
+import { verify } from 'hono/jwt'
 import { createPostInput, updatePostInput } from "@ankit1478/common-mediumproject"
 
 export const BlogRoute = new Hono<{

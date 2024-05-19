@@ -12,15 +12,14 @@ export const Blogs = () => {
             <div className="w-screen h-screen flex justify-center items-center">
                 <Spinner />
             </div>
+
         );
     }
 
     return (
         <div>
+            <Fullblog {...blogs}></Fullblog>;
 
-            <div>
-                <Fullblog blog={blogs}></Fullblog>
-            </div>
         </div>
     );
 };

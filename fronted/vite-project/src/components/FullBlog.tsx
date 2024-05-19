@@ -1,10 +1,18 @@
 import { BlogComponent } from '../pages/Delete';
 import { Appbar } from './AppBar';
-import { Blog } from '../hooks/index'
+// import { Blog } from '../hooks/index'
 
+interface Blog {
+    author: {
+        name: string;
+    };
+    content: string;
+    id: string;
+    title: string;
+}
 
-export const Fullblog = ({ blog }: { blog: Blog }) => {
-
+export const Fullblog = ({ author, id, content, title }: Blog) => {
+    console.log(author.name);
     return (
         <div>
             <Appbar />
@@ -14,18 +22,18 @@ export const Fullblog = ({ blog }: { blog: Blog }) => {
                         <div className="p-6 md:p-8">
                             <div>
                                 <h1 className="block mt-1 text-lg leading-tight font-bold text-black hover:underline">
-                                    {blog.title}
+                                    {title}
                                 </h1>
                                 <br />
                                 <div className="flex items-center tracking-wide text-m text-gray-500 font-semibold">
-                                    <Avatar name={blog.author.name.toUpperCase()} /> &nbsp; &nbsp;by {blog.author.name}
+                                    <Avatar name={author.name.toUpperCase()} /> &nbsp; &nbsp;by {author.name}
                                 </div>
                             </div>
-                            <p className="mt-2 text-gray-500">{blog.content}</p>
+                            <p className="mt-2 text-gray-500">{content}</p>
                         </div>
                     </div>
                     <div className="p-5">
-                        <BlogComponent blogId={blog.id} authorId={blog.author.name} />
+                        <BlogComponent blogId={id} authorId={author.name} />
                     </div>
                 </div>
             </div>

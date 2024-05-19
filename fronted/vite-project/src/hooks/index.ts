@@ -13,11 +13,11 @@ export interface Blog {
         "name": string
     }
 }
-export type BlogArray = Blog[];
+
 
 export const useBlog = ({ id }: { id: string }) => {
     const [loading, setLoading] = useState<boolean>(true);
-    const [blogs, setBlogs] = useState<Blog[]>([]);
+    const [blogs, setBlogs] = useState<Blog>();
 
     useEffect(() => {
         axios.get(`${BACKEND_URL}/api/v1/blog/${id}`, {
