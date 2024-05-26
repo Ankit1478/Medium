@@ -4,11 +4,10 @@ import { Signin } from './pages/Signin'
 import { Blog } from './pages/Blog'
 import { Blogs } from './pages/Blogs'
 import { Post } from './pages/Posts'
-
+import { UpdateRoute } from './pages/UpdateRoute'
 
 
 function App() {
-
   return (
     <>
       <BrowserRouter>
@@ -19,6 +18,7 @@ function App() {
           <Route path="/blog/:id" element={<Blogs />} />
           <Route path="/blog" element={<Blog />}></Route>
           <Route path="/post" element={<Post />}></Route>
+          <Route path="/update/:blogId" element={<UpdateRoute />} />
         </Routes>
       </BrowserRouter>
     </>

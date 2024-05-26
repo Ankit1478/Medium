@@ -1,6 +1,6 @@
 import { BlogComponent } from '../pages/Delete';
+import { Update } from '../pages/EditButton';
 import { Appbar } from './AppBar';
-// import { Blog } from '../hooks/index'
 
 interface Blog {
     author: {
@@ -32,8 +32,9 @@ export const Fullblog = ({ author, id, content, title }: Blog) => {
                             <p className="mt-2 text-gray-500">{content}</p>
                         </div>
                     </div>
-                    <div className="p-5">
-                        <BlogComponent blogId={id} authorId={author.name} />
+                    <div className="p-5 flex space-x-4" >
+                        <BlogComponent blogId={id} />
+                        <Update blogId={id}></Update>
                     </div>
                 </div>
             </div>

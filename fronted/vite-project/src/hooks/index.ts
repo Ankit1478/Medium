@@ -26,14 +26,14 @@ export const useBlog = ({ id }: { id: string }) => {
             },
         })
             .then(response => {
-                setBlogs(response.data.users); // Assuming the response data contains an array of blogs
+                setBlogs(response.data.users);
                 setLoading(false);
             })
             .catch(error => {
                 console.error("Failed to fetch blogs:", error);
                 setLoading(false);
             });
-    }, [id]); // Make sure to include 'id' as a dependency
+    }, [id]);
 
     return {
         loading,
@@ -42,7 +42,7 @@ export const useBlog = ({ id }: { id: string }) => {
 };
 export const useBlogs = () => {
     const [loading, setLoading] = useState<boolean>(true);
-    const [blogs, setBlogs] = useState<Blog[]>([]); // Use the Blog interface
+    const [blogs, setBlogs] = useState<Blog[]>([]);
 
 
     useEffect(() => {
@@ -52,7 +52,7 @@ export const useBlogs = () => {
             }
         })
             .then(response => {
-                setBlogs(response.data.users); // Ensure correct data structure
+                setBlogs(response.data.users);
                 setLoading(false);
             })
             .catch(error => {
@@ -84,3 +84,4 @@ export async function deleteBlog(blogId: string) {
     );
     return response.data.message;
 }
+

@@ -41,13 +41,17 @@ function ProfileBox() {
         localStorage.removeItem("token");
         localStorage.removeItem("authoId");
         localStorage.removeItem("user");
+        localStorage.removeItem("name");
+        localStorage.removeItem("postId");
+        window.location.reload();
         navigate("/");
     };
 
-
+    let getName = localStorage.getItem("name");
+    if (getName == null) getName = "Ankit"
     return (
         <div className="relative cursor-pointer">
-            <Avatar name="Ankit Raj" onClick={() => setShow(!show)} />
+            <Avatar name={`${getName[0]}`} onClick={() => setShow(!show)} />
             {show && (
                 <div className="absolute -bottom-24 -left-16 shadow-lg p-4 bg-gray-50 border border-gray-100 z-50 w-[160px]">
                     <div className="flex flex-col gap-3">
