@@ -5,6 +5,7 @@ import { Blog } from './pages/Blog'
 import { Blogs } from './pages/Blogs'
 import { Post } from './pages/Posts'
 import { UpdateRoute } from './pages/UpdateRoute'
+import { GenerativeAi } from './pages/AIgenerator'
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="/blog" element={<Blog />}></Route>
           <Route path="/post" element={<Post />}></Route>
           <Route path="/update/:blogId" element={<UpdateRoute />} />
+          <Route path="/geneartiveAi" element={<GenerativeAi></GenerativeAi>} ></Route>
         </Routes>
       </BrowserRouter>
     </>

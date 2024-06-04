@@ -16,7 +16,8 @@ export const BlogCard = ({
     content,
     publishedDate
 }: BlogCardProps) => {
-    let minutes: number = Math.ceil(content.length / 100);
+    const wordCount = content.split(/\s+/).length;
+    let minutes: number = Math.ceil(wordCount / 200);
     let minutesString: string = minutes.toString();
     return (
         <Link to={`/blog/${id}`}>

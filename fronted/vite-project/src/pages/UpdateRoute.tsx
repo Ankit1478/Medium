@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { BACKEND_URL } from "../config";
 import { Appbar } from "../components/AppBar";
 import { useNavigate, useParams } from "react-router-dom";
@@ -9,6 +9,28 @@ export const UpdateRoute = () => {
     const [content, setContent] = useState("");
     const navigate = useNavigate();
     const { blogId } = useParams<{ blogId: string }>();
+
+    useEffect(() => {
+        const fetchBlog = async () => {
+            try {
+                await axios.get(`${BACKEND_URL}/api/v1/blog/${blogId}`, {
+                    headers: {
+                        Authorization: localStorage.getItem("token") || '',
+                    },
+                })
+                    .then(response => {
+                        setTitle(response.data.users.title);
+                        setContent(response.data.users.content);
+                    })
+
+            }
+            catch (error) {
+                console.error("Failed to fetch blog:", error);
+            }
+        };
+        fetchBlog();
+    }, [blogId])
+
 
     const handleSubmit = async () => {
         const token = localStorage.getItem("token");

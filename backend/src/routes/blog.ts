@@ -115,42 +115,6 @@ BlogRoute.post('/', async (c) => {
 })
 
 
-BlogRoute.put('/update', async (c) => {
-    const prisma = new PrismaClient({
-        datasourceUrl: c.env.DATABASE_URL,
-    }).$extends(withAccelerate())
-
-    const body = await c.req.json();
-    const { success } = updatePostInput.safeParse(body);
-    if (!success) {
-        c.status(411);
-        return c.json({
-            msg: "input not correct"
-        })
-    }
-
-    try {
-        const post = await prisma.post.update({
-            where: {
-                id: body.id
-            },
-            data: {
-                title: body.title,
-                content: body.content,
-            }
-        });
-
-        return c.json({
-            id: post.id
-        })
-
-    }
-    catch (e) {
-        console.log(e);
-        c.status(411);
-        return c.text('Invalid')
-    }
-})
 
 
 BlogRoute.delete("/delete/:id", async (c) => {
@@ -205,5 +169,60 @@ BlogRoute.delete("/delete/:id", async (c) => {
     } catch (e) {
         console.log(e);
         return c.json({ msg: "Failed to delete post" });
+    }
+});
+
+
+BlogRoute.put('/update/:id', async (c) => {
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const token = c.req.header("authorization");
+    if (!token) {
+        return c.json({ msg: "Authentication token is missing" });
+    }
+
+    let userId;
+    try {
+        const decoded = await verify(token, c.env.JWT_SECRET);
+        userId = decoded.id;
+    } catch (e) {
+        return c.json({ msg: "Invalid or expired token" });
+    }
+
+    const postId = c.req.param("id");
+    try {
+        const post = await prisma.post.findUnique({
+            where: {
+                id: postId
+            }
+        });
+
+        if (!post) {
+            return c.json({ msg: "Post not found" });
+        }
+
+        if (post.authorId !== userId) {
+            return c.json({ msg: "User not authorized to update this post" });
+        }
+
+        // Parse the request body
+        const { title, content } = await c.req.json();
+
+        await prisma.post.update({
+            where: {
+                id: postId
+            },
+            data: {
+                title: title || post.title,
+                content: content || post.content
+            }
+        });
+
+        return c.json({ message: "Successfully updated post" });
+    } catch (e) {
+        console.log(e);
+        return c.json({ msg: "Failed to update post" });
     }
 });

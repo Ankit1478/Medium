@@ -17,11 +17,9 @@ export const Post = () => {
                 Authorization: localStorage.getItem("token")
             }
         })
-
         localStorage.setItem("authoId", res.data.user_id)
         localStorage.setItem("postId", res.data.id)
         navigate(`/blog/${res.data.id}`)
-
     };
 
     return (
