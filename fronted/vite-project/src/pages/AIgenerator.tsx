@@ -4,14 +4,14 @@ import { BACKEND_URL } from "../config";
 import { Appbar } from "../components/AppBar";
 import { useNavigate } from "react-router-dom";
 
+
 export const GenerativeAi = () => {
     const [title, setTitle] = useState("");
-    const [loading, setLoading] = useState(false)
+
     const navigate = useNavigate();
 
 
     const generateContent = async (prompt: string) => {
-        if (loading) return <div> loading....</div>
         try {
             const response = await axios.post(
                 "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyDAyiMoen1zf8vjyKYf7f0gxQRmzyvG3fs",
@@ -40,7 +40,9 @@ export const GenerativeAi = () => {
                 .replace(/- /g, '')
                 .replace(/\n+/g, '\n');
 
+
             return generatedText;
+
         } catch (error) {
             console.error("Error generating content:", error);
             return "";
@@ -48,6 +50,7 @@ export const GenerativeAi = () => {
     };
 
     const handleSubmit = async () => {
+
         const generatedContent = await generateContent(title);
         const res = await axios.post(`${BACKEND_URL}/api/v1/blog`, {
             title,
@@ -60,7 +63,7 @@ export const GenerativeAi = () => {
 
         localStorage.setItem("authoId", res.data.user_id);
         localStorage.setItem("postId", res.data.id);
-        setLoading(false)
+
         navigate(`/blog/${res.data.id}`);
     };
 

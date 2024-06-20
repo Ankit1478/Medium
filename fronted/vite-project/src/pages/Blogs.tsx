@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useBlog } from '../hooks'; // Import the Blog type
+import { useBlog } from '../hooks';
 import { Fullblog } from '../components/FullBlog';
 import { Spinner } from '../components/Spiner';
 
