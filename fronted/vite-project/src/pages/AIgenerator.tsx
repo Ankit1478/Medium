@@ -8,6 +8,7 @@ export const GenerativeAi = () => {
     const [title, setTitle] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const token = localStorage.getItem("token");
 
     const generateContent = async (prompt: string) => {
         try {
@@ -46,6 +47,9 @@ export const GenerativeAi = () => {
 
     const handleSubmit = async () => {
         setLoading(true);
+        if (!token) {
+            navigate("/signin");
+        }
         const generatedContent = await generateContent(title);
         const res = await axios.post(`${BACKEND_URL}/api/v1/blog`, {
             title,
