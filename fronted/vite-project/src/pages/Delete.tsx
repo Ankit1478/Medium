@@ -28,7 +28,6 @@ export const BlogComponent: React.FC<BlogProps> = ({ blogId }) => {
                 const response = await axios.get(`${BACKEND_URL}/api/v1/blog/${blogId}`)
 
                 const authorName = response.data.users.author.name;
-                console.log(authorName);
                 setPost(response.data);
 
                 const currentUserId = localStorage.getItem('name');

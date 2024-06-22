@@ -12,7 +12,6 @@ interface Blog {
 }
 
 export const Fullblog = ({ author, id, content, title }: Blog) => {
-    console.log(author.name);
     return (
         <div>
             <Appbar />

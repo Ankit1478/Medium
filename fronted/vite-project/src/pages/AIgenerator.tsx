@@ -10,6 +10,11 @@ export const GenerativeAi = () => {
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
 
+    const extractTitle = (text: string) => {
+        const lines = text.split('\n');
+        return lines.length > 0 ? lines[0].replace('## ', '') : 'Untitled';
+    };
+
     const generateContent = async (prompt: string) => {
         try {
             const response = await axios.post(
@@ -38,7 +43,11 @@ export const GenerativeAi = () => {
                 .replace(/- /g, '')
                 .replace(/\n+/g, '\n');
 
-            return generatedText;
+            const extractedTitle = extractTitle(generatedText);
+            let len = extractTitle.length;
+            setTitle(extractedTitle);
+            const generatedTexts = generatedText.substring(len).trim();
+            return generatedTexts;
         } catch (error) {
             console.error("Error generating content:", error);
             return "";
@@ -49,14 +58,17 @@ export const GenerativeAi = () => {
         setLoading(true);
         if (!token) {
             navigate("/signin");
+            return;
         }
+
         const generatedContent = await generateContent(title);
+
         const res = await axios.post(`${BACKEND_URL}/api/v1/blog`, {
-            title,
+            title: extractTitle(generatedContent),
             content: generatedContent
         }, {
             headers: {
-                Authorization: localStorage.getItem("token")
+                Authorization: token
             }
         });
 
@@ -77,6 +89,7 @@ export const GenerativeAi = () => {
                         className="bg-gray-50 text-gray-900 text-lg hover:border-blue-500 focus:border-blue-800 active:border-blue-800 outline-none block w-full p-4"
                         placeholder="Title"
                         required
+                        value={title}
                         onChange={(e) => setTitle(e.target.value)}
                     />
                 </div>
