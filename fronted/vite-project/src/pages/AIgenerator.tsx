@@ -18,7 +18,7 @@ export const GenerativeAi = () => {
     const generateContent = async (prompt: string) => {
         try {
             const response = await axios.post(
-                "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyDAyiMoen1zf8vjyKYf7f0gxQRmzyvG3fs",
+                `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${process.env.AI_URL}`,
                 {
                     contents: [
                         {
