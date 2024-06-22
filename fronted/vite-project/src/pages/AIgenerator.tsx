@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { BACKEND_URL } from "../config";
+import { AI_URL, BACKEND_URL } from "../config";
 import { Appbar } from "../components/AppBar";
 import { useNavigate } from "react-router-dom";
 
@@ -18,7 +18,7 @@ export const GenerativeAi = () => {
     const generateContent = async (prompt: string) => {
         try {
             const response = await axios.post(
-                `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${process.env.AI_URL}`,
+                `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${AI_URL}`,
                 {
                     contents: [
                         {
