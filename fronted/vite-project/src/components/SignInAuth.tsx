@@ -33,6 +33,19 @@ export const SigninAuth = ({ type }: { type: "signup" | "signin" }) => {
             setEror("error occurs")
         }
     }
+    async function demo() {
+        const jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIxODhjNzMwLTcwOGQtNDkzZS05OTI0LTMxYzgwYzQ4YjE0MCJ9.gxFSV3p74IWDwmWEAVxYrLSOCAdshXHR_KLOrfoWkG8";
+        const id = "b188c730-708d-493e-9924-31c80c48b140";
+        const name = "Zuha";
+        if (jwt) {
+            localStorage.setItem("token", jwt);
+            localStorage.setItem("user", id);
+            localStorage.setItem("name", name)
+            navigate("/blog");
+        }
+        else
+            setEror("error occurs")
+    }
 
     return (
         <div>
@@ -107,6 +120,14 @@ export const SigninAuth = ({ type }: { type: "signup" | "signin" }) => {
                                 {type === "signup" ? "Sign up" : "Sign in"}
                             </button>
                         </div>
+                        <button
+                            type="button"
+                            className="w-full text-white bg-[#050708] hover:bg-[#050708]/90 
+                            focus:ring-4 focus:outline-none focus:ring-[#050708]/50 font-medium rounded-lg 
+                            text-sm px-5 py-2.5 text-center inline-flex items-center justify-center 
+                            dark:focus:ring-[#050708]/50 dark:hover:bg-[#050708]/30 me-2 mb-2"
+                            onClick={demo}> Demo
+                        </button>
                     </div>
                 </div>
             </div>
