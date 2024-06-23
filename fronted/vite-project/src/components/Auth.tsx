@@ -43,7 +43,7 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
     async function demo() {
         const jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIxODhjNzMwLTcwOGQtNDkzZS05OTI0LTMxYzgwYzQ4YjE0MCJ9.gxFSV3p74IWDwmWEAVxYrLSOCAdshXHR_KLOrfoWkG8";
         const id = "b188c730-708d-493e-9924-31c80c48b140";
-        const name = "Zuha";
+        const name = "Zuha Roy";
         localStorage.setItem("token", jwt);
         localStorage.setItem("user", id);
         localStorage.setItem("name", name)
