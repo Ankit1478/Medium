@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AI_URL, BACKEND_URL } from '../config';
 import { AlertSignin } from '../components/SigninAlert';
+import { Spinner } from '../components/Spiner';
 
 export const GenerativeAi: React.FC = () => {
     const { text, listening, startListening, stopListening, hasRecognitionSupport } = useSpeechRecognition()();
@@ -130,6 +131,11 @@ export const GenerativeAi: React.FC = () => {
                             {loading ? "Generating..." : "Generate"}
                         </button>
                     </div>
+                    {loading && (
+                        <div className="flex justify-center items-center">
+                            <Spinner></Spinner>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
