@@ -126,7 +126,7 @@ export const SigninAuth = ({ type }: { type: "signup" | "signin" }) => {
                             focus:ring-4 focus:outline-none focus:ring-[#050708]/50 font-medium rounded-lg 
                             text-sm px-5 py-2.5 text-center inline-flex items-center justify-center 
                             dark:focus:ring-[#050708]/50 dark:hover:bg-[#050708]/30 me-2 mb-2"
-                            onClick={demo}> Demo
+                            onClick={demo}> Login without credential
                         </button>
                     </div>
                 </div>
@@ -147,7 +147,7 @@ interface LableInputType {
 export const LabelInput = ({ label, placeholder, onChange, type }: LableInputType) => {
     return (
         <div>
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-black  font-bold">{label}</label>
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">{label}</label>
             <input onChange={onChange} type={type || "text"} id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder={placeholder} required />
         </div>
     )

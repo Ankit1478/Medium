@@ -16,7 +16,7 @@ export const AlertSignin = () => {
             </svg>
             <span className="sr-only">Info</span>
             <div className="ms-3 text-sm font-medium">
-                Please use dummy Email to sign up like xyz@gmail.com but should be unique ,name also should be unique and dummy password like 123456 then sign in with same credential
+                Please use chrome for search by voice
             </div>
             <button
                 type="button"

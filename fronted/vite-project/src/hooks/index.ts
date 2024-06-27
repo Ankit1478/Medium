@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 
 export interface Blog {
+    date: string;
     "content": string,
     "title": string
     "id": string,
