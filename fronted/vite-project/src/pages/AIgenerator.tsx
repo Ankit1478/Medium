@@ -108,7 +108,7 @@ export const GenerativeAi: React.FC = () => {
                         <div className="my-2">
                             <button className="mt-0 p-6 inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800"
 
-                                onClick={startListening} disabled={listening}> {listening ? "Listing...." : "Search by voice"}</button> &nbsp;  &nbsp;
+                                onClick={startListening} disabled={listening}> {listening ? "Listing...." : "Speak"}</button> &nbsp;  &nbsp;
                             {hasRecognitionSupport ? (
                                 <button className="mt-0 p-6 inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800"
                                     onClick={stopListening} disabled={!listening}> Stop Listing  </button>
