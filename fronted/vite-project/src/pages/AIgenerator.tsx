@@ -23,6 +23,17 @@ export const GenerativeAi: React.FC = () => {
         return lines.length > 0 ? lines[0].replace('## ', '') : 'Untitled';
     };
 
+    const formatGeneratedText = (text: string) => {
+        return text
+            .replace(/##+/g, '')
+            .replace(/\*\*/g, '')
+            .replace(/\*/g, '')
+            .replace(/- /g, '- ')
+            .replace(/(\d\.)/g, '\n$1') // Ensure numbered points are on new lines
+            .replace(/\n+/g, '\n\n')
+            .trim();
+    };
+
     const generateContent = async (prompt: string) => {
         try {
             const response = await axios.post(
@@ -42,20 +53,14 @@ export const GenerativeAi: React.FC = () => {
                     }
                 }
             );
-            let generatedText = response.data.candidates[0].content.parts[0].text;
 
-            generatedText = generatedText
-                .replace(/##+/g, '')
-                .replace(/\*\*/g, '')
-                .replace(/\*/g, '')
-                .replace(/- /g, '')
-                .replace(/\n+/g, '\n');
+            let generatedText = response.data.candidates[0].content.parts[0].text;
+            generatedText = formatGeneratedText(generatedText);
 
             const extractedTitle = extractTitle(generatedText);
-            let len = extractTitle.length;
             setTitle(extractedTitle);
-            const generatedTexts = generatedText.substring(len).trim();
-            return generatedTexts;
+
+            return generatedText;
         } catch (error) {
             console.error("Error generating content:", error);
             return "";
@@ -88,57 +93,58 @@ export const GenerativeAi: React.FC = () => {
 
     return (
         <div>
-
-            <div>
-                <Appbar />
-                <AlertSignin></AlertSignin>
-                <div className="flex flex-col gap-8 p-4 md:p-10">
-                    <div className="my-2 w-full">
-                        <input
-                            type="text"
-                            id="first_name"
-                            className="bg-gray-50 text-gray-900 text-lg hover:border-blue-500 focus:border-blue-800 active:border-blue-800 outline-none block w-full p-4"
-                            placeholder="Say or Type write a blog.... "
-                            required
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                        />
-                    </div>
-                    <div className="my-2">
-                        <div className="my-2">
-                            <button className="mt-0 p-6 inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800"
-
-                                onClick={startListening} disabled={listening}> {listening ? "Listing...." : "Speak"}</button> &nbsp;  &nbsp;
-                            {hasRecognitionSupport ? (
-                                <button className="mt-0 p-6 inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800"
-                                    onClick={stopListening} disabled={!listening}> Stop Listing  </button>
-                            ) :
-                                ""}
-
-                        </div>
-                        <div className="my-2">
-
-                        </div>
-                    </div>
-
-                    <div className="my-1">
-                        <button
-                            type="submit"
-                            onClick={handleSubmit}
-                            className="mt-0 inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800"
-                            disabled={loading}
-                        >
-                            {loading ? "Generating..." : "Generate"}
-                        </button>
-                    </div>
-                    {loading && (
-                        <div className="flex justify-center items-center">
-                            <Spinner></Spinner>
-                        </div>
-                    )}
+            <Appbar />
+            <AlertSignin />
+            <div className="flex flex-col gap-8 p-4 md:p-10">
+                <div className="my-2 w-full">
+                    <input
+                        type="text"
+                        id="first_name"
+                        className="bg-gray-50 text-gray-900 text-lg hover:border-blue-500 focus:border-blue-800 active:border-blue-800 outline-none block w-full p-4"
+                        placeholder="Say or Type write a blog.... "
+                        required
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                    />
                 </div>
+                <div className="my-2">
+                    <div className="my-2">
+                        <button
+                            className="mt-0 p-6 inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800"
+                            onClick={startListening}
+                            disabled={listening}
+                        >
+                            {listening ? "Listening...." : "Speak"}
+                        </button>
+                        &nbsp; &nbsp;
+                        {hasRecognitionSupport && (
+                            <button
+                                className="mt-0 p-6 inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800"
+                                onClick={stopListening}
+                                disabled={!listening}
+                            >
+                                Stop Listening
+                            </button>
+                        )}
+                    </div>
+                </div>
+
+                <div className="my-1">
+                    <button
+                        type="submit"
+                        onClick={handleSubmit}
+                        className="mt-0 inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800"
+                        disabled={loading}
+                    >
+                        {loading ? "Generating..." : "Generate"}
+                    </button>
+                </div>
+                {loading && (
+                    <div className="flex justify-center items-center">
+                        <Spinner />
+                    </div>
+                )}
             </div>
         </div>
     );
 };
-
