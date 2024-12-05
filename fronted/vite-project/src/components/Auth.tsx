@@ -41,9 +41,9 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
         }
     }
     async function demo() {
-        const jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhlN2MyMjY4LWQzMDItNGYzMS04NTgyLTZmMjQwM2JmYWIzYSJ9.ZKeeyrsCc3O-edIfjDA136W1WcE88L65RI2N1PIIa5g";
-        const id = "8e7c2268-d302-4f31-8582-6f2403bfab3a";
-        const name = "Sam";
+        const jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjlmMWM5ODI3LWZlMjItNGY1YS1hMTUwLTQ2NjBlM2U1MThlZSJ9.-20AY19k_-L-10jdodTAjMPWh266HPd8u60IVu36o5Y";
+        const id = "9f1c9827-fe22-4f5a-a150-4660e3e518ee";
+        const name = "Ankit";
         localStorage.setItem("token", jwt);
         localStorage.setItem("user", id);
         localStorage.setItem("name", name)
